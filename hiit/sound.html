@@ -1,0 +1,386 @@
+<script id="_wau3kb">var _wau = _wau || []; _wau.push(["tab", "2m40pef1pc", "3kb", "right-lower"]);</script><script async src="../bla.js"></script>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Workout Timer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Christian Pichler" />
+<meta name="description" content="Ein kostenloser zwei phasen Timer, optimal für Trainings. Unterlegt mit Musik von NCS." />
+<meta name="keywords" content="Hiit, Pilates, Tabata, yoga, robe, workout, Timer, kostenlos,zwei phasen timer,Pixelbaum,Pixel,baum,web,free" />
+<link rel="icon" href="timericon.png" type="image/x-icon" />
+<link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="style1_3.css">
+</head>
+<body>
+<div class="wrapper">
+    <div id="timer"></div>
+	<canvas id="canvas"></canvas>
+	<div id="container">
+	<p>Trainingsdauer in Minuten</p>
+	<input id="total" type="number" min="2" max="120" step="1" value="30">
+	<p>Aktive Phase in Sekunden</p>
+	<input id="active" type="number" min="10" max="60" step="1" value="50">
+	<p>Passive Phase in Sekunden</p>
+	<input id="break" type="number" min="0" max="60" step="1" value="10">
+	<br><br>
+	<button onclick="play()">Start</button>
+	</div>
+	<div class="info-box">
+	<span class="hide-small">Music provided by <a target="_blank" href="http://spoti.fi/NCS">NCS</a></span>
+	<div>Du hörst:<h3 id="musicTitle">Titel</h3><h6 id="musicArtist">Interpret</h6>
+	<audio id="player">
+	<source src="" type="audio/mpeg">
+	</audio>
+</div>
+	<div style="hide-small"><p id="regler" style="margin-bottom:5px;">Lautstärke:</p><div class="slidecontainer">
+  <input type="range" min="0" max="100" value="25" class="slider" id="volumeMusic">
+</div></div>
+	<a style="text-decoration:none;color:white;" href="https://pixelbaum.at/">&copy; Christian Pichler</a>
+	</div>
+</div>
+</body>
+</html>
+
+
+<script>
+const FULL_DASH_ARRAY = 283;
+
+const COLOR_CODES = {
+  active: {
+    color: "active"
+  },
+  passiv: {
+    color: "passiv",
+  }
+  };
+
+let remainingPathColor = COLOR_CODES.passiv.color;
+
+function iOS() {
+  return [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ].includes(navigator.platform)
+  // iPad on iOS 13 detection
+  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
+
+var isIOS = iOS();
+if(isIOS){document.getElementById('regler').innerHTML = "Can't change on IOS"}
+
+const player = document.getElementById('player');
+const slider = document.getElementById('volumeMusic');
+var title = document.getElementById('musicTitle');
+var interpret = document.getElementById('musicArtist');
+var tracklist = [];
+
+tracklist.push(['Shootin Stars','Aero Cord feat.DDark','music/1.mp3']);
+tracklist.push(['Turn It Up','Anikdote','music/2.mp3']);
+tracklist.push(['Northen Lights','Blazars','music/3.mp3']);
+tracklist.push(['Back From The Dead','Desmeon','music/4.mp3']);
+tracklist.push(['Wait For Me','Giraffe Squad','music/5.mp3']);
+tracklist.push(['Breathe','Glude','music/6.mp3']);
+tracklist.push(['Shadows','Its different feat. Miss Mary','music/7.mp3']);
+tracklist.push(['Forces','Jim Yosef feat. Ivan Jamile Kédo Rebelle','music/8.mp3']);
+tracklist.push(['Linked','Jim Yosef and Anna Yvette','music/9.mp3']);
+tracklist.push(['Feels Right','JPB MYRNE feat. Yung Fusion','music/10.mp3']);
+tracklist.push(['Invisible','Julius Dreisig and Zeus X Crona','music/11.mp3']);
+tracklist.push(['Everybody','K-391','music/12.mp3']);
+tracklist.push(['Haha','Kozah','music/13.mp3']);
+tracklist.push(['Ark','Ship Wrek and Zookeepers','music/14.mp3']);
+tracklist.push(['Vessel','Ship Wrek, Zookeepers and Trauzers','music/15.mp3']);
+tracklist.push(['Shine (Gabriel Drew Bloom Remix)','Spektrem','music/16.mp3']);
+tracklist.push(['Fearless','TULE feat. Chris Linton','music/17.mp3']);
+tracklist.push(['Explode','Verm','music/18.mp3']);
+tracklist.push(['Mortals','Warriyo feat. Laura Brehm','music/19.mp3']);
+tracklist.push(['Eternal Minds','Waysons','music/20.mp3']);
+
+shuffle(tracklist);
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+
+  return `${minutes}:${seconds}`;
+}
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
+
+slider.oninput = function() {	
+player.volume = (this.value/100)/3;
+}
+
+class workout{
+constructor(time,active,pause){
+this.time = time * 60 * 1000 + 1000;
+this.active = active;
+this.pause = pause;
+this.getReady = 0;
+this.passedTime = 0 - pause * 1000;
+this.ding = new Audio('ui_sounds/ding.wav');
+this.dingg = new Audio('ui_sounds/dingg.wav');
+this.go = new Audio('ui_sounds/go.wav');
+this.end = new Audio('ui_sounds/end.mp3');
+this.done = new Audio('ui_sounds/done.wav');
+this.welcome = new Audio('ui_sounds/welcome.wav');
+this.volume = 1;
+this.status = "active";
+}
+get timeLeft() {
+	return this.time - this.passedTime - this.pause * 1000;
+}
+}
+var track = 0;
+player.addEventListener('ended',function(){
+    track++;
+    if (track < tracklist.length) {
+      player.src = tracklist[track][2];
+	  title.innerHTML = tracklist[track][0];
+	  interpret.innerHTML = tracklist[track][1];
+      return;
+    }
+    track = 0;
+    player.src = tracklist[track][2];
+	title.innerHTML = tracklist[track][0];
+	interpret.innerHTML = tracklist[track][1];
+});
+
+function musicPlayer(){
+	player.pause();
+	title.innerHTML = tracklist[track][0];
+	interpret.innerHTML = tracklist[track][1];
+	player.src = tracklist[track][2];
+	player.load();
+	player.play();
+	player.volume = (document.getElementById('volumeMusic').value/100);
+	player.autoplay = true;
+}
+    
+// Update the dasharray value as time passes, starting with 283
+function setCircleDasharray(timeleft, timelimit) {
+  const circleDasharray = `${(((timeleft / timelimit) - (1 / timelimit) * (1 - timeleft / timelimit)) * FULL_DASH_ARRAY).toFixed(0)} 283`;
+  document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
+}
+
+function play() {
+musicPlayer();
+
+const total = document.getElementById("total").value;
+const active = document.getElementById("active").value;
+const pause = document.getElementById("break").value;
+
+document.getElementById("container").innerHTML = '<div id="forIOS" class="base-timer"><svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g class="base-timer__circle"><circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle><path id="base-timer-path-remaining" stroke-dasharray="283" class="base-timer__path-remaining ${remainingPathColor}"" d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"></path></g></svg><span id="clock"></span></div>';
+document.getElementById("container").style.backgroundColor = "rgba(0,0,0,0)";
+
+document.getElementById("timer").style.display = "flex";
+
+var training = new workout(total,active,pause);
+
+var interval = setInterval(function(){
+if(training.status != "finish"){
+if (training.getReady > 0) {
+if(training.status == "active"){
+var duration = training.active;
+}
+if(training.status == "pause"){
+var duration = training.pause;
+}
+setCircleDasharray(training.getReady, duration);
+//console.log(training.getReady - 1);
+training.getReady -= 1;
+document.getElementById("clock").innerHTML = training.getReady;
+
+}
+if (training.getReady == 3 || training.getReady == 2 || training.getReady == 1){
+training.ding.play();
+}
+
+if (training.getReady == 0){
+if(training.status == "active"){
+if(training.passedTime > 0){
+training.end.play();
+}else{
+training.welcome.play();
+}
+//document.getElementById("base-timer-path-remaining").style.stroke = "#654fef";
+document.getElementById("base-timer-path-remaining").classList.remove(COLOR_CODES.passiv.color);document.getElementById("base-timer-path-remaining").classList.add(COLOR_CODES.active.color);
+if(isIOS){
+document.getElementById("forIOS").style.backgroundColor = "#654fef";
+}
+//setCircleDasharray(0, 0);
+//console.log(training.passedTime);
+training.status = "pause";
+training.getReady = training.pause;
+if(training.passedTime <= 0){
+document.getElementById("clock").innerHTML = "Welcome";
+}else if(training.pause == 0){
+document.getElementById("clock").innerHTML = "0";
+}else{
+document.getElementById("clock").innerHTML = "PAUSE";
+}
+}else if(training.status == "pause"){
+if(training.pause > 0){
+training.go.play();
+}
+//console.log("pause to active");
+//document.getElementById("base-timer-path-remaining").style.stroke = "#C70039";
+document.getElementById("base-timer-path-remaining").classList.remove(COLOR_CODES.active.color);document.getElementById("base-timer-path-remaining").classList.add(COLOR_CODES.passiv.color);
+if(isIOS){
+document.getElementById("forIOS").style.backgroundColor = "#C70039";
+}
+//setCircleDasharray(0, 0);
+training.status = "active";
+training.getReady = training.active;
+document.getElementById("clock").innerHTML = "GO";
+}
+}
+var now = new Date().getTime();
+training.passedTime += 1000;
+
+document.getElementById("timer").innerHTML = formatTime(training.timeLeft/1000);
+if(training.time <= training.passedTime + (training.pause * 1000)){
+player.pause();
+training.status = "finish";
+//console.log("done");
+}
+
+}else{
+clearInterval(interval);
+training.done.play();
+document.getElementById("container").innerHTML = "";
+document.getElementById("timer").style.display = "none";
+document.getElementById("canvas").style.display = "flex";
+var win = document.createElement("h1");
+var winText = document.createTextNode("Du hast es geschafft!");
+win.appendChild(winText);
+document.getElementById("container").appendChild(win);
+}
+
+}, 1000);
+}
+
+// confetti
+
+let W = window.innerWidth;
+let H = window.innerHeight;
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const maxConfettis = 100;
+const particles = [];
+
+const possibleColors = [
+  "DodgerBlue",
+  "OliveDrab",
+  "Gold",
+  "Pink",
+  "SlateBlue",
+  "LightBlue",
+  "Gold",
+  "Violet",
+  "PaleGreen",
+  "SteelBlue",
+  "SandyBrown",
+  "Chocolate",
+  "Crimson"
+];
+
+function randomFromTo(from, to) {
+  return Math.floor(Math.random() * (to - from + 1) + from);
+}
+
+function confettiParticle() {
+  this.x = Math.random() * W; // x
+  this.y = Math.random() * H - H; // y
+  this.r = randomFromTo(5, 50); // radius
+  this.d = Math.random() * maxConfettis + 11;
+  this.color =
+    possibleColors[Math.floor(Math.random() * possibleColors.length)];
+  this.tilt = Math.floor(Math.random() * 15) - 5;
+  this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+  this.tiltAngle = 0;
+
+  this.draw = function() {
+    context.beginPath();
+    context.lineWidth = this.r / 2;
+    context.strokeStyle = this.color;
+    context.moveTo(this.x + this.tilt + this.r / 3, this.y);
+    context.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
+    return context.stroke();
+  };
+}
+
+function Draw() {
+  const results = [];
+
+  // Magical recursive functional love
+  requestAnimationFrame(Draw);
+
+  context.clearRect(0, 0, W, window.innerHeight);
+
+  for (var i = 0; i < maxConfettis; i++) {
+    results.push(particles[i].draw());
+  }
+
+  let particle = {};
+  let remainingFlakes = 0;
+  for (var i = 0; i < maxConfettis; i++) {
+    particle = particles[i];
+
+    particle.tiltAngle += particle.tiltAngleIncremental;
+    particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
+    particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
+
+    if (particle.y <= H) remainingFlakes++;
+
+    // If a confetti has fluttered out of view,
+    // bring it back to above the viewport and let if re-fall.
+    if (particle.x > W + 30 || particle.x < -30 || particle.y > H) {
+      particle.x = Math.random() * W;
+      particle.y = -30;
+      particle.tilt = Math.floor(Math.random() * 10) - 20;
+    }
+  }
+
+  return results;
+}
+
+window.addEventListener(
+  "resize",
+  function() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  },
+  false
+);
+
+// Push new confetti objects to `particles[]`
+for (var i = 0; i < maxConfettis; i++) {
+  particles.push(new confettiParticle());
+}
+
+// Initialize
+canvas.width = W;
+canvas.height = H;
+Draw();
+
+</script>
