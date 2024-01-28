@@ -243,37 +243,45 @@ var player = {
 	winTile: dungenTiles.length-1
 };
 
+function movePlayer(newPositionId,newTileId) {
+	document.getElementById(newTileId).appendChild(document.getElementById('player'));
+	document.getElementById(newTileId).classList.add("start");	
+	player.positionId = newPositionId;
+}
+
+function dispatchKeyboardEvent(eventType, key) {
+    var event = new KeyboardEvent(eventType, {
+        bubbles: true,
+        cancelable: true,
+        key: key
+    });
+    document.dispatchEvent(event);
+}
+
 document.onkeydown = function(event) {
-	let keyPressed = event.keyCode;
+	switch (event.key) {
+		case "ArrowUp":
+			if(dungenTiles[player.positionId][2] != 0) {
+				movePlayer((dungenTiles[player.positionId][2])-2, dungenTiles[player.positionId][2]);
+			}
+		break;
+		case "ArrowRight":
+			if(dungenTiles[player.positionId][3] != 0) {
+				movePlayer((dungenTiles[player.positionId][3])-2, dungenTiles[player.positionId][3]);
+			}
+		break;
+		case "ArrowDown":
+			if(dungenTiles[player.positionId][4] != 0) {
+				movePlayer((dungenTiles[player.positionId][4])-2, dungenTiles[player.positionId][4]);
+			}
+		break;
+		case "ArrowLeft":
+			if(dungenTiles[player.positionId][5] != 0) {
+				movePlayer((dungenTiles[player.positionId][5])-2, dungenTiles[player.positionId][5]);
+			}
+		break;
+	}
 	
-	if (keyPressed == 38) {//oben
-		if(dungenTiles[player.positionId][2] != 0){
-		document.getElementById(dungenTiles[player.positionId][2]).appendChild(document.getElementById('player'));
-		document.getElementById(dungenTiles[player.positionId][2]).classList.add("start");
-		player.positionId = (dungenTiles[player.positionId][2])-2;
-		}
-	}
-	if (keyPressed == 39) {//rechts
-		if(dungenTiles[player.positionId][3] != 0){
-		document.getElementById(dungenTiles[player.positionId][3]).appendChild(document.getElementById('player'));
-		document.getElementById(dungenTiles[player.positionId][3]).classList.add("start");	
-		player.positionId = (dungenTiles[player.positionId][3])-2;
-		}
-	}
-	if (keyPressed == 40) {//unten
-		if(dungenTiles[player.positionId][4] != 0){
-		document.getElementById(dungenTiles[player.positionId][4]).appendChild(document.getElementById('player'));
-		document.getElementById(dungenTiles[player.positionId][4]).classList.add("start");	
-		player.positionId = (dungenTiles[player.positionId][4])-2;
-		}
-	}
-	if (keyPressed == 37) {//links
-		if(dungenTiles[player.positionId][5] != 0){
-		document.getElementById(dungenTiles[player.positionId][5]).appendChild(document.getElementById('player'));
-		document.getElementById(dungenTiles[player.positionId][5]).classList.add("start");	
-		player.positionId = (dungenTiles[player.positionId][5])-2;
-		}
-	}
 	if(dungenTiles[player.positionId][0] == player.winTile){
 		document.getElementById(dungenTiles.length-1).style.backgroundColor = 'rgba(0,255,0,0.1)';
 		document.getElementById('text').innerHTML = 'Glückwunsch, du hast den Ausgang gefunden!';

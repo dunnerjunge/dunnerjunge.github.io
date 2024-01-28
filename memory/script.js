@@ -2,49 +2,44 @@ function randomIntBetween(min, max) {
 return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-class game {
+class Game {
 	constructor(cardNumber, cardId, cardImg, background) {
-		this.cardNumber = cardNumber;
+		this.cardNumber *= 2;
+		this.cardPairs = cardNumber;
 		this.cardId = cardId;
 		this.cardImg = cardImg;
 		this.background = background;
-		this.won = "no";
-		this.clickable = "yes";
+		this.clickable = true;
 		this.points = 0;
 		this.moves = 0;
 		this.totalSeconds = 0;
-		this.timer = setInterval(setTime, 1000);
 	}
-
 }
 
-class gameCard {
+class GameCard {
 	constructor(id,front) {
 		this.id = id;
 		this.front = front;
 	}
-	
 }
 
 function createCards(number) {
-let imgs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]
+let imgs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
 imgs = shuffle(imgs);
-for(var i = 0; i < number;i++){	
-var card = new gameCard(i+1,imgs[imgs.length-1]);
-gridpositions.push(card);
-var card = new gameCard(i+1+number,imgs[imgs.length-1]);
-gridpositions.push(card);
-imgs.pop();
-}
-document.getElementById('points').innerHTML = 'Found: ' + thisgame.points + " / " + thisgame.cardNumber/2;
+	for(let i = 0; i < number;i++) {	
+		let card1 = new GameCard(i+1,imgs[imgs.length-1]);
+		gridpositions.push(card1);
+		let card2 = new GameCard(i+1+number,imgs[imgs.length-1]);
+		gridpositions.push(card2);
+		imgs.pop();
+	}
+document.getElementById('points').innerHTML = 'Found: ' + thisgame.points + " / " + thisgame.cardPairs;
 }
 
-function pushCards()
-{
+function pushCards() {
 	let x = 1;
 	let y = 1;
-	for(item of gridpositions)
-	{
+	for(item of gridpositions) {
 		let div = document.createElement("div");
 		div.classList.add("game-card");
 		div.style.gridRow = x;
@@ -56,7 +51,7 @@ function pushCards()
 		divcard.setAttribute("id", item.id);
 		divcard.setAttribute("data-img", item.front);
 		divcard.setAttribute("onclick", "Flip(this)");
-		//divcard.setAttribute("onmousemove", "Shade(this)");
+		divcard.setAttribute("onmousemove", "Shade(this)");
 		divcard.setAttribute("onmouseleave", "Clear(this)");
 		div.appendChild(divcard);
 		document.getElementById("gamegrid").appendChild(div);
@@ -77,121 +72,95 @@ function shuffle(array)
 }
 
 
-let thisgame = new game(16, "", "", randomIntBetween(1,7));
+let thisgame = new Game(8, "", "", randomIntBetween(1,7));
 
 let grid = document.createElement("div");
 grid.setAttribute("id", "gamegrid");
 document.getElementById("canvas").appendChild(grid);
 let gridpositions = [];
 document.body.style.backgroundImage = "url('bg/" + thisgame.background + ".png')"
-createCards(thisgame.cardNumber/2);
+createCards(thisgame.cardPairs);
 shuffle(gridpositions);
 pushCards();
-thisgame.timer;
+const time = setInterval(StopWatch, 1000);
 //optics
 
-function Flip(x) {
-	if(thisgame.clickable == "yes")
-	{
-		x.classList.remove("cover");
-		x.classList.add("cover-static");
-		x.parentElement.classList.remove("game-card");
-		x.parentElement.classList.add("game-card-static");
-		x.removeAttribute("onclick");
-		x.removeAttribute("onmousemove");
-		x.removeAttribute("onmouseleave");	
-		rotate(x);
-		validate(x);
-}
+function Flip(element) {
+	if (!thisgame.clickable) return;
+  
+	element.classList.remove("cover");
+	element.classList.add("cover-static");
+	element.parentElement.classList.remove("game-card");
+	element.parentElement.classList.add("game-card-static");
+	element.removeAttribute("onclick");
+	element.removeAttribute("onmousemove");
+	element.removeAttribute("onmouseleave");
+	rotate(element);
+	validate(element);
 }
 
-function validate(x){
-	if(thisgame.cardImg == "")
-	{
+function validate(x) {
+	if (thisgame.cardImg === "") {
 		thisgame.cardImg = x.dataset.img;
 		thisgame.cardId = x.id;
-	}
-	else
-	{
-		if(thisgame.cardImg == x.dataset.img)
-		{
+	} else {
+		if (thisgame.cardImg === x.dataset.img) {
 			thisgame.points++;
-			document.getElementById('points').innerHTML = 'Found: ' + thisgame.points + " / " + thisgame.cardNumber/2;
+			document.getElementById("points").innerHTML =
+			"Found: " + thisgame.points + " / " + thisgame.cardPairs;
 			thisgame.cardImg = "";
 			thisgame.cardId = "";
-			if(thisgame.points == thisgame.cardNumber/2)
-			{
-				clearInterval (thisgame.timer);
-				let winmsg = document.createElement("div");
+			if (thisgame.points === thisgame.cardPairs) {
+				clearInterval(time);
+				const winmsg = document.createElement("div");
 				winmsg.classList.add("win");
-				winmsg.innerHTML = "Du hast Gewonnen!";
+				winmsg.innerHTML = "Du hast gewonnen!";
 				document.getElementById("canvas").appendChild(winmsg);
 			}
-		}
-		else
-		{
-			thisgame.clickable = "no";
-			
-			setTimeout(function() {
-			
-			rotateback(x);
-			
-			let y = document.getElementById(thisgame.cardId);
-			rotateback(y);
-			
-			
-			}, 1500)
-			
-			setTimeout(function() {
-			
-			
-			x.classList.add("cover");
-			x.classList.remove("cover-static");
-			x.parentElement.classList.add("game-card");
-			x.parentElement.classList.remove("game-card-static");
-			x.setAttribute("onclick", "Flip(this)");
-			//x.setAttribute("onmousemove", "Shade(this)");
-			x.setAttribute("onmouseleave", "Clear(this)");
-			
-			let y = document.getElementById(thisgame.cardId);
-			
-			y.classList.add("cover");
-			y.classList.remove("cover-static");
-			y.parentElement.classList.add("game-card");
-			y.parentElement.classList.remove("game-card-static");
-			y.setAttribute("onclick", "Flip(this)");
-			//y.setAttribute("onmousemove", "Shade(this)");
-			y.setAttribute("onmouseleave", "Clear(this)");
-			
-			thisgame.cardImg = "";
-			thisgame.cardId = "";
-			thisgame.clickable = "yes";
-			}, 2000)
-		}
+	  } else {
+			thisgame.clickable = false;
+			const y = document.getElementById(thisgame.cardId);
+			setTimeout(() => {
+				checkList(x);
+				checkList(y);	  
+				thisgame.cardImg = "";
+				thisgame.cardId = "";
+				thisgame.clickable = true;
+			}, 1500);
+	  	}
 	}
 }
 
-function rotateback(br) {
-	br.classList.add('flip-90');
-	setTimeout(function() {
-	br.style.backgroundImage = "url(bg.jpg)";	
-	br.classList.remove('flip-90');
-  }, 500)
+function checkList(card){
+	rotate(card, false);
+	card.classList.add("cover");
+	card.classList.remove("cover-static");
+	card.parentElement.classList.add("game-card");
+	card.parentElement.classList.remove("game-card-static");
+	card.setAttribute("onclick", "Flip(this)");
+	card.setAttribute("onmousemove", "Shade(this)");
+	card.setAttribute("onmouseleave", "Clear(this)");
 }
 
-function rotate(x) { 
-	x.style.transform = "";
-	x.style.filter = "";
-	x.classList.add('flip-90');
+function rotate(element, show = true) {
+	if(show == true){
+		element.style.transform = "";
+		element.style.filter = "";
+	}
+
+	element.classList.add('flip-90');
+
 	setTimeout(function() {
-		x.style.backgroundImage = "url(img/" + x.dataset.img + ".jpg)";
-		x.classList.remove('flip-90');
-		}, 500)
+		if(show == true){
+			element.style.backgroundImage = "url(img/" + element.dataset.img + ".jpg)";
+		} else {
+			element.style.backgroundImage = "url(bg.jpg)";
+		}
+		element.classList.remove('flip-90');
+	}, 500);
 }
 
-
-/*function Shade(item) {
-
+function Shade(item) {
 	let bounding = item.getBoundingClientRect();
 
 	bounding.x = Math.max(0, (event.clientX - Math.round(bounding.left)));
@@ -207,14 +176,14 @@ function rotate(x) {
 
 	item.style.transform = "rotate3d(" + (posY / hypotenuseCursor) + ", " + (-posX / hypotenuseCursor) + ", 0, " + (ratio * 30) + "deg)";
 	item.style.filter = "brightness(" + (1.6 - bounding.y / bounding.height) + ")";
-}*/
+}
 
 function Clear(x) {
 	x.style.transform = "";
 	x.style.filter = "";
 }
 
-function setTime() {
+function StopWatch() {
   thisgame.totalSeconds++;
   document.getElementById("time").innerHTML = pad(parseInt(thisgame.totalSeconds / 60)) + ":" + pad(thisgame.totalSeconds % 60);
 }

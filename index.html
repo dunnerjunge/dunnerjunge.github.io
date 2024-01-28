@@ -2,7 +2,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Pixelbaum wächst Pixel für Pixel</title>
+<title>Pixelbaum w&auml;chst Pixel f&uuml;r Pixel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Hier bei PixelBaum.at findest du Webapps und Webgames die dir gefallen werden. Schau vorbei und teste völlig kostenlos die neusten Webanwendungen." />
 <meta name="keywords" content="Pixelbaum,Pixel,baum,web,spiele,games,webgame,christian,pichler,design,programmieren,development" />
@@ -22,42 +22,40 @@
 	}
 
 :root{
-	--success:18,153,28;		/*#78BF21*/
-	--success-dark:14,122,20;	/*#4C721F*/
-	--info:16,156,242;			/*#3454BF*/
-	--info-dark:9,109,170;		/*#2A3B73*/
-	--warning:230,126,34;		/*#e67e22*/
-	--warning-dark:167,88,19;	/*#a75813*/
-	--danger:247,0,0;			/*#f70000*/
-	--danger-dark:186,0,0;		/*#ba0000*/
-	--pink:232,62,140;			/*#BF214E*/
-	--pink-dark:170,9,109;		/*#731933*/
-	--indigo:102,16,242;		/*#6B47BF*/
-	--indigo-dark:59,18,115;	/*#3C2573*/
-	--dark:52,58,64; 			/*#343a40*/
-	--body:33,37,41;			/*#212529*/
-	--body-border:59,64,69;		/*#3b4045*/
-	--white:245, 245, 245;		/*f5f5f5*/
-	--grey:145,145,145;			/*#919191*/
-	--black:16,16,16;			/*#101010*/
+	/* root colors*/
+    --blue: #3986ac;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --orange: #fd7e14;
+    --teal: #20c997;
+    --black: #000;
+    --white: #fff;
+    --gray: #777;
+
+    /* root system colors*/
+    --success: #62c462;
+    --info: #74cae3;
+    --warning: #f89406;
+    --danger: #ee5f5b;
+
+    --dark: #272F38;
+    --tab: #191b1d;
+    --tab-hover: #222;
+
+    --body-color: #aaa;
 	
-	--radius:0.5rem;
+	--radius:.5rem;
 	
 	--max:1310px;
 	--med:855px;
 	--min:400px;
 	
-	--akzent:18,153,28;			/*#4c721f*/
-	--akzent-dark:14,122,20;	/*#3C2573*/
-	
 	--speed:300ms;
-	
-	--shadow:0 14px 28px rgba(var(--black),.5), 0 10px 10px rgba(var(--black),.5);
 }
 
 *{
-	margin:0px;
-	padding:0px;
+	margin:0;
+	padding:0;
 	text-decoration:none;
 	box-sizing:inherit;
 }
@@ -67,28 +65,22 @@
 }
 
 html{
-	height:100%;
-	width:100%;
+	height:100vh;
+	width:100vw;
 	overflow-x:hidden;
 	box-sizing:border-box;
 }
 
 body {
-	color:rgba(var(--white),1);	
+	overflow-x:hidden;
+	color:var(--white);	
 	font-family:meine-schrift;
-	background:rgba(var(--black),0.91) url('images/background.jpg');
-	background-size: cover;
-	background-position:top center;
-	background-attachment:fixed;
+	background-color: var(--dark);
 	cursor:default;
 }
 
 .clickable{
 	cursor: pointer;
-}
-
-.ddd{
-	text-shadow:1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191, 1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2);
 }
 
 .wrap{
@@ -100,10 +92,6 @@ overflow:hidden;
 }
 
 .headcontainer{
-	width:var(--max);
-	position:relative;
-	display:flex;
-	justify-content:center;
 	padding:20px;
 }
 
@@ -117,38 +105,13 @@ overflow:hidden;
 .headline{
 	font-size:2rem;
 	line-height:1.25rem;
-	color:rgba(var(--white),1);
+	color:var(--white);
 }
 
 .subheadline{
-	font-size:0.87rem;
-	letter-spacing:0.025rem;
-	color:rgba(var(--white),1);
-	text-shadow:var(--shadow);
-}
-
-.lane{
-display:flex;
-align-items:center;
-justify-content:center;
-background-color: rgba(var(--white),0.25);
-height:50px;
-font-size:1rem;
-box-shadow:var(--shadow);
-}
-
-.logo{
-	display:flex;
-	align-items:center;
-	justify-content:space-around;
-	}
-
-.logo img{
-	margin-right:10px;
-	height:2rem;
-	width: 2rem;
-	border:solid 3px rgba(var(--white),1);
-	border-radius:25% 0 0 0;
+	font-size:.87rem;
+	letter-spacing:.025rem;
+	color:var(--white);
 }
 
 .lane_box{
@@ -157,130 +120,12 @@ box-shadow:var(--shadow);
 	align-items:center;
 }
 
-.language{
-position:relative;
-background-color:rgba(var(--akzent),1);
-padding:10px;
-margin-left:15px;
-border-radius:var(--radius);
-color:rgba(var(--white),1);
-transition:var(--speed);
-}
-
-.language:hover{
-background-color:rgba(var(--akzent-dark),1);
-}
-
-.lang_links{
-position:absolute;
-top:-5000;
-z-index:99999;
-}
-
-.lang_links a{
-display:flex;
-color:rgba(var(--white),1);	
-flex-direction:column;
-font-size:1.25rem;
-padding:10px;
-background-color:rgba(var(--akzent),1);
-}
-
-.lang_links a:hover{
-background-color:rgba(var(--akzent-dark),1);
-}
-
-.language:hover .lang_links
-{
-top:35;
-right:0;
-}
-
-.devider{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	font-size:2.5rem;
-	text-align:center;
-	margin:0px auto 0px auto;
-	width:var(--max);
-}
-
-.devider img{
-	margin:0rem 2rem -1.75rem 2rem;
-	height:2.75rem;
-}
-
 .content{
 	display:flex;
 	justify-content:center;
 	margin:40px auto;
 	flex-wrap: wrap;
 	grid-gap:45px 55px;
-}
-
-.project{
-	position:relative;
-	width:400px;
-	padding-bottom:140px;
-    letter-spacing: 1px;
-	border-bottom:solid 8px rgba(var(--body-border),1);
-	background-color: rgba(var(--body),0.95);
-	box-shadow:var(--shadow);
-	border-radius:var(--radius);
-	
-}
-
-.project .img{
-	overflow: hidden;
-	border-radius:0.5rem 0.5rem 0rem 0rem;
-}
-
-.project img{
-	object-fit: cover;
-	width:400px;
-	transition: transform 5s, filter 0.5s ease-in-out;
-  	transform-origin: center center;
-  	filter: grayscale(40%);
-}
-
-.project:hover img{
-	filter: grayscale(0%);
-  	transform: scale(1.2);
-}
-
-.project h3{
-	padding:20px 35px;
-	font-size:2.6rem;
-	text-transform: uppercase;
-	
-}
-
-.project p{
-	padding:0px 35px;
-	font-size:1.3rem;
-}
-
-.device {
-font-size:1.1em;
-position: absolute;
-right: 10px; top: 10px;
-z-index: 1;
-overflow:hidden;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-}
-
-.device i {
-width: 40px; height: 40px;
-margin-left:10px;
-border-radius:var(--radius);
-display: flex;
-justify-content: center;
-align-items: center;
-background-color:rgba(var(--body),0.6);
 }
 
 .button{
@@ -292,50 +137,19 @@ background-color:rgba(var(--body),0.6);
 	font-size:1.6em;
     text-decoration:none;
 	padding:15px;
-	color:rgba(var(--white),1);
+	color:var(--white);
 	text-align:center;
 	transition:var(--speed);
-	background-color:rgba(var(--akzent),1);
+	background-color:var(--blue);
 }
 
 .button:hover, .button:focus {
-	background-color:rgba(var(--akzent-dark),1);
-}
-
-.released {
-  position: absolute;
-  font-size:17px;
-  bottom: 5px;
-  left:35px;
-  right:35px;
-  z-index: 1;
-  overflow: hidden;
-  opacity: 0.6;
-}
-
-.status {
-	color:transparent;
-	position: absolute;
-	bottom: 8px;
-	right:35px;
-	z-index: 1;
-	overflow: hidden;
-	opacity: 0.6;
-	height:15px;
-	width:15px;
-	border-radius:50%;
-}
-
-.open{
-background-color:rgba(var(--success),1);
-}
-
-.close{
-background-color:rgba(var(--danger),1);
+	background-color:var(--blue);
+	filter:brightness(1px)
 }
 
 .copy{
-	font-size:20px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 footer{
@@ -344,12 +158,11 @@ justify-content:center;
 padding:10px;
 font-size:1.5rem;
 letter-spacing:1px;
-background-color: rgba(var(--body),0.7);
-box-shadow:var(--shadow);
+background-color:var(--dark);
 }
 
 footer a{
-color: rgba(var(--white),1);
+color:var(--white);
 text-decoration:none;
 transition:var(--speed);	
 }
@@ -364,18 +177,11 @@ text-decoration: underline;
 width:var(--med);
 }
 
-.devider{
-width:var(--med);
-}
-
 footer{
 padding:5px;
 font-size:15px;
 }
 
-.copy{
-	font-size:12px;
-}
 }
 
 @media (max-width: 875px) {
@@ -384,39 +190,8 @@ font-size:15px;
 width:var(--min);
 }
 
-.devider{
-	width:var(--min);
-}
-
-.hide-on-phone{
-	display:none;
-}
-
-.devider{
-	font-size:3em;
-	width:99%;
-	margin: 0px auto 10px auto;
-}
-
-.devider img{
-	margin:0rem 2rem -1.75rem 2rem;
-	height:2rem;
-}
-
-.copy{
-	font-size:10px;
-}
-
 .footer{
 	flex-direction:column;
-}
-
-.border-img_small{
-	display:block;
-	border-radius:var(--radius);
-	border-top:solid 5px rgba(var(--body-border),1);
-	border-bottom:solid 5px rgba(var(--akzent),1);
-	box-shadow:var(--shadow);
 }
 
 .speechbubble{
@@ -439,9 +214,8 @@ width:var(--min);
 	padding:20px 30px;
 	font-size:1.35rem;
 	border-radius:2.5rem 2.5rem 3.5rem 3.5rem;
-	color:rgba(var(--black),1);
-	background-color:rgba(var(--white),1);
-	box-shadow:var(--shadow);
+	color:var(--black);
+	background-color:var(--white);
 }
 
 .speechbubble:after{
@@ -451,7 +225,7 @@ width:var(--min);
 	right: 50%;
 	bottom: -25px;
 	border: 15px solid;
-	border-color: rgba(var(--white),1) rgba(var(--white),1) transparent transparent;
+	border-color: var(--white) var(--white) transparent transparent;
 }
 
 .speechbubble:before{
@@ -465,304 +239,292 @@ width:var(--min);
 	background-size:cover;
 }
 
-/* Slideshow container */
-.slideshow-container
-{
-	position:relative;
+.hide{
+	display:none;
+}
+
+.content{
 	display:flex;
 	justify-content:center;
-	background-color:rgba(var(--white),1);
-	padding:10px;
+	margin:40px auto;
+	flex-wrap: wrap;
+	grid-gap:45px 55px;
+}
+
+.project{
+	position:relative;
+	width:400px;
+	padding-bottom:140px;
+	color: var(--body-color);
+    letter-spacing: 1px;
+	border-bottom:solid 8px var(--gray);
+	background-color: var(--dark);
+	border-radius:var(--radius);
+	
+}
+
+.project .img{
+	overflow: hidden;
+	border-radius:.5rem .5rem 0 0;
+}
+
+.project img{
+	object-fit: cover;
+	width:400px;
+	transition: transform 5s, filter .5s ease-in-out;
+  	transform-origin: center center;
+  	filter: grayscale(40%);
+}
+
+.project:hover img{
+	filter: grayscale(0%);
+  	transform: scale(1.2);
+}
+
+.project h3{
+	padding:20px 35px;
+	font-size:2.6rem;
+	text-transform: uppercase;
+}
+
+.project p{
+	padding:0px 35px;
+	font-size:1.3rem;
+}
+
+.button{
+	position:absolute;
+	bottom:50px;
+	right:35px;
+	left:35px;
+ 	display:block;
+	font-size:1.6em;
+    text-decoration:none;
+	padding:15px;
+	color:var(--white);
+	text-align:center;
+	transition:var(--speed);
+	background-color:var(--blue);
+}
+
+.button:hover, .button:focus {
+	background-color:var(--info);
+}
+
+.released {
+  position: absolute;
+  font-size:17px;
+  bottom: 5px;
+  left:35px;
+  right:35px;
+  z-index: 1;
+  overflow: hidden;
+  opacity: .6;
+}
+
+.status {
+	color:transparent;
+	position: absolute;
+	bottom: 8px;
+	right:35px;
+	z-index: 1;
+	overflow: hidden;
+	opacity: .6;
+	height:15px;
+	width:15px;
+	border-radius:50%;
+}
+
+.open{
+background-color:var(--success);
+}
+
+.close{
+background-color:var(--danger);
+}
+
+#contact-form {
+    margin:auto;
+    padding: 15px 30px 20px 30px;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+	width:400px;
+    letter-spacing: 1px;
+	border-bottom:solid 8px var(--gray);
+	background-color: var(--dark);
 	border-radius:var(--radius);
 }
 
-.slider-wrap
-{
-	margin:10px;
+#contact-form > input[type="email"], #contact-form > textarea {
+    border: 1px solid var(--black);
+    border-radius: 4px;
+    display:block;
+    color:var(--black);
+    padding:10px;
 }
 
-/* Slides */
-.mySlides {
-  display: none;
-}
-
-/* The dot/bullet/indicator container */
-.dot-container
+#contact-form > input[type="submit"]
 {
-	position:absolute;
-	bottom:5px;
-	left: 0; 
-	right: 0; 
-	margin: auto; 
-	width: 100%;
+    font-size: 1.1rem;
+ 	display:block;
+    text-decoration:none;
+	padding:15px;
+	color:var(--white);
 	text-align:center;
+	transition:var(--speed);
+	background-color:var(--blue);
+    cursor:pointer;
+    border: none;
 }
 
-.dot-container a{
-	font-size:1.2rem;
-	cursor: pointer;
-	color:rgba(var(--black),0.5);
-	transition: background-color 0.6s ease;
+#contact-form > input[type="submit"]:hover, #contact-form > input[type="submit"]:focus {
+	background-color:var(--info);
 }
-
-.dot-container a:hover{
-	color:rgba(var(--black),1);
-}
-
-.dot {
-  cursor: pointer;
-  height: 13px;
-  width: 13px;
-  margin:1px 2px;
-  border:solid black 1px;
-  background-color: rgba(var(--black),0.1);
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-
-.active {
-  background-color: rgba(var(--black),0.6);
-}
-
-.dot:hover {
-  background-color: rgba(var(--black),1);
-}
-
-.mySlides p {
-	color: rgba(var(--black),1);
-	font-size:1.15rem;
-}
-
-	.hide{
-		display:none;
-	}
 </style>
-<body id="html">
-
-<div class="lane">
+<body>
+<div style="display:flex;align-items:center;justify-content:center;background-color:var(--dark);height:50px;font-size:1rem;z-index:999;position:relative;">
 	<div class="wrap">
 
-		<div class="logo">
-			<img src="images/logo.png" alt="preview">
+		<div style="display:flex;align-items:center;justify-content:space-around;">
+			<div style="display:flex;align-items: center;justify-content: center;margin: 30px 10px 0px 0px;height:5rem;width: 5rem;background-color:var(--dark);border-radius: 50%;padding:20px">
+				<img style="height:4.5rem;width: 4.5rem" src="images/Pixtree.png" alt="preview">
+			</div>
 			<div>
 				<strong class="headline">PixelBaum</strong>
-				<p class="subheadline"><span class="de">wächst Pixel für Pixel.</span><span class="en hide">add pixel by pixel.</span></p>
+				<p class="subheadline"><span class="de">w&auml;chst Pixel f&uuml;r Pixel.</span><span class="en hide">add pixel by pixel.</span></p>
 			</div>
 		</div>
 		<div class="lane_box">
-			<div class="language"><p class="de" onclick="document.querySelectorAll('.de').forEach(element => {element.classList.add('hide');});document.querySelectorAll('.en').forEach(element => {element.classList.remove('hide');});">EN</p><p class="en hide" onclick="document.querySelectorAll('.en').forEach(element => {element.classList.add('hide');});document.querySelectorAll('.de').forEach(element => {element.classList.remove('hide');});">DE</p></div>
+			<div class="clickable">
+				<p class="de" onclick="changeLanguage('en')">
+					<img src="images/gb.jpg" height="25px" width="50px" alt="EN">
+				</p>
+				<p class="en hide" onclick="changeLanguage('de')">
+					<img src="images/de.jpg" height="25px" width="50px" alt="DE">
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
 
-<div class="center">
-<div class="headcontainer">
-	<div class="speechbubble">
-		<div id="randtext"><span class="de">Oh, die Macht von Javascript ist nicht verfügbar.</span><span class="en hide">Oh, the power of JS is not available.</span></div>
-	</div>
-</div>
-</div>
-		
-<div class="devider ddd">
-<img src="images/sling.png" alt="preview">
-<h1>Projects</h1>
-<img src="images/sling2.png" alt="preview">
-</div>
-
-<div class="center">
-	<div class="wrap">
-		<div class="content">	
-
-			<div class="project"><div class="img"><img src="images/hiit.jpg" alt="preview"></div>
-				<h3>HIIT Timer</h3>
-				<p><span class="de">Ein Timer um ein HIIT Training zu absolvieren. Mit kleinen Soundeffekten und coolen Animationen trainiert man gleich viel lieber.</span><span class="en hide">A timer to do a HIIT workout. Start your training with nice sound effects and cool animations.</span></p>
-				<a class="button desktop" target="_blank" href="hiit/sound.html"><i class="fas fa-running"></i> Get Fit</a>
-				<div class="released">Released: 01.01.2021 | Updated: 5.03.2021</div>
-				<div class="status close"></div>
-			</div>
-			
-			<div class="project"><div class="img"><img src="images/memory.jpg" alt="preview"></div>
-				<h3>Web Memory</h3>
-				<p><span class="de">Memory, wie man es kennt, teilweise sind die Animationen verbuggt. Das war der eigentliche Grund dafür, warum ich dieses Projekt gestartet habe um mich mit den Animationen zu befassen. Einige Animationen sind wirklich gut gelungen, es gibt aber noch einiges zu verbessern.</span><span class="en hide">Good old Memory, yes some of the animations are bugged. That was the main reason why I started this project. So I try new animations techniques. Some animations are smooth, but there is still a lot to improve.</span></p>
-				<a class="button desktop" target="_blank" href="https://pixelbaum.at/memory/index.html"><i class="fab fa-buffer"></i> Do remember</a>
-				<div class="released">Released: 20.12.2020 | Updated: 15.08.2022</div>
-				<div class="status open"></div>
-			</div>
-			
-			<div class="project"><div class="img"><img src="images/gen2.jpg" alt="preview"></div>
-				<h3>Dungeon Escape 2</h3>
-				<p><span class="de">Ein Prototyp von einem verbesserten Dungeongenerator. Hierfür verwende ich Prozedurale Synthese. Probier's aus und sammle Goldmünzen und finde den Ausgang. Eventuell kommt noch ein Timer um den Druck auf den Spieler zu erhöhen, aber soweit bin ich ganz zufrieden.</span><span class="en hide">A prototype of an improved dungeon generator. This uses procedural generation. Try it, collect coins and find the exit. Maybe a timer will be added to increase the pressure on the player, but so far I am quite happy with it.</span></p>
-				<a class="button desktop" target="_blank" href="https://pixelbaum.at/dungen_2/dungen2.html"><i class="fas fa-dungeon"></i> Find EXIT</a>
-				<div class="released">Released: 04.11.2020 | Updated: -</div>
-				<div class="status open"></div>
-			</div>
-			
-			<div class="project"><div class="img"><img src="images/island.jpg" alt="preview"></div>
-				<h3>Island Gen V.0.4</h3>
-				<p><span class="de">Hier ist eine gute Version des ultimativen Inselgenerators. Die Versionszahl verrät dass hier noch mehr geplant ist, aber wann ich Zeit finde es zu vollenden wird sich zeigen.</span><span class="en hide">Here's a good version of the ultimate island generator. The version number reveals that more is planned here, time will tell.</span></p>
-				<a class="button" href="/island/island.php"><i class="fas fa-water"></i> Create land</a>
-				<div class="released">Released: 24.09.2020 | Updated: -</div>
-				<div class="status open"></div>
-			</div>
-			
-			<div class="project"><div class="img"><img src="images/gen1.jpg" alt="preview"></div>
-				<h3>Dungeon Escape 1</h3>
-				<p><span class="de">Der Dungeon Generator ist ein wichtiges Tool für viele Spiele um Abwechslung hinein zu bringen, daher habe ich hier meine eigene Version geschrieben. Dungeon Generator 2 ist jetzt Verfügbar.</span><span class="en hide">The Dungeon Generator is an important tool for many games to add variety, so I've written my own version here.</span></p>
-				<a class="button" href="https://pixelbaum.at/dungen/dungen.html"><i class="fas fa-sync"></i> Generate</a>
-				<div class="released">Released: 28.05.2020 | Updated: 03.11.2020</div>	
-				<div class="status close"></div>
-			</div>
-			
-			<div class="project"><div class="img"><img src="images/bunker.jpg" alt="preview"></div>
-				<h3><span class="de">Matura Arbeit</span><span class="en  hide">Thesis (Matura)</span></h3>
-				<p><span class="de">Mit dieser Arbeit habe ich meine Matura erhalten. Eine militärische Einrichtung die in Blender modelliert wurde. Mit hilfe von Blend 4 Web kann das Projekt mit einer VR-Brille angesehen werden.</span><span class="en hide">This diploma thesis earned me my Matura. A military facility was modeled in Blender. With the help of Blend 4 Web, it is possible to run it with VR goggles.</span></p>
-				<a class="button" target="_blank" href="https://filedn.eu/lsg6pD0V8i1jPkW0lY98df7/diplomarbeit/bunker.html"><i class="fas fa-paperclip"></i> Live Demo</a>
-				<div class="released">Released: 04.07.2018 | -</div>
-				<div class="status close"></div>
-			</div>
-			
-		</div>
-	</div>
-</div>
-
-<div class="hide-on-phone">
-<div class="devider ddd">
-<img src="images/sling.png" alt="preview">
-<h1>Images</h1>
-<img src="images/sling2.png" alt="preview">
-</div>
+<video autoplay muted loop style="object-fit: cover;width: 100vw;height: 100vh;position: fixed;top: 0;left: 0;filter: blur(3px) brightness(0.3);z-index:-9999;">
+		<source src="images/animation.mp4" type="video/mp4">
+		Your browser does not support HTML5 video.
+</video>
 
 <div class="center">
 	<div class="headcontainer">
-			<div id="slideshow-container" class="slideshow-container">
-
-				<div class="dot-container"><a onclick="plusSlides(-1)"><i class="fas fa-angle-left"></i></a>
-					<span class="dot" onclick="currentSlide('1')"></span>
-					<span class="dot" onclick="currentSlide('2')"></span>
-					<span class="dot" onclick="currentSlide('3')"></span>
-					<span class="dot" onclick="currentSlide('4')"></span>
-					<span class="dot" onclick="currentSlide('5')"></span>
-					<a onclick="plusSlides(1)"><i class="fas fa-angle-right"></i></a>
-				</div>
-			</div>
+		<div class="speechbubble">
+			<div id="randtext"><span class="de">Oh, die Macht von Javascript ist nicht verf&uuml;gbar.</span><span class="en hide">Oh, the power of JS is not available.</span></div>
+		</div>	
 	</div>
 </div>
-</div>
+
+
+	<div class="center">
+		<div class="wrap">
+			<div class="content">	
+				
+				<div class="project"><div class="img"><img src="images/hiit.jpg" alt="preview"></div>
+					<h3>HIIT Timer</h3>
+					<p><span class="de">Ein Timer um ein HIIT Training zu absolvieren. Mit kleinen Soundeffekten und coolen Animationen trainiert man gleich viel lieber.</span><span class="en hide">A timer to do a HIIT workout. Start your training with nice sound effects and cool animations.</span></p>
+					<a class="button desktop" target="_blank" href="hiit/sound.html"><i class="fas fa-running"></i> Get Fit</a>
+					<div class="released">Released: 01.01.2021 | Updated: 5.03.2021</div>
+					<div class="status close"></div>
+				</div>
+				
+				<div class="project"><div class="img"><img src="images/memory.jpg" alt="preview"></div>
+					<h3>Web Memory</h3>
+					<p><span class="de">Memory, wie man es kennt, teilweise sind die Animationen verbuggt. Das war der eigentliche Grund daf&uuml;r, warum ich dieses Projekt gestartet habe um mich mit den Animationen zu befassen. Einige Animationen sind wirklich gut gelungen, es gibt aber noch einiges zu verbessern.</span><span class="en hide">Good old Memory, yes some of the animations are bugged. That was the main reason why I started this project. So I try new animations techniques. Some animations are smooth, but there is still a lot to improve.</span></p>
+					<a class="button desktop" target="_blank" href="memory/index.html"><i class="fab fa-buffer"></i> Do remember</a>
+					<div class="released">Released: 20.12.2020 | Updated: 07.02.2023</div>
+					<div class="status open"></div>
+				</div>
+				
+				<div class="project"><div class="img"><img src="images/gen2.jpg" alt="preview"></div>
+					<h3>Dungeon Escape 2</h3>
+					<p><span class="de">Ein Prototyp von einem verbesserten Dungeongenerator. Hierf&uuml;r verwende ich Prozedurale Synthese. Probier's aus und sammle Goldm&uuml;nzen und finde den Ausgang. Eventuell kommt noch ein Timer um den Druck auf den Spieler zu erh&ouml;hen, aber soweit bin ich ganz zufrieden.</span><span class="en hide">A prototype of an improved dungeon generator. This uses procedural generation. Try it, collect coins and find the exit. Maybe a timer will be added to increase the pressure on the player, but so far I am quite happy with it.</span></p>
+					<a class="button desktop" target="_blank" href="dungen_2/dungen2.html"><i class="fas fa-dungeon"></i> Find Exit</a>
+					<div class="released">Released: 04.11.2020 | Updated: 29.04.2023</div>
+					<div class="status open"></div>
+				</div>
+				
+				<div class="project"><div class="img"><img src="images/gen1.jpg" alt="preview"></div>
+					<h3>Dungeon Escape 1</h3>
+					<p><span class="de">Der Dungeon Generator ist ein wichtiges Tool f&uuml;r viele Spiele um Abwechslung hinein zu bringen, daher habe ich hier meine eigene Version geschrieben. Dungeon Generator 2 ist jetzt Verf&uuml;gbar.</span><span class="en hide">The Dungeon Generator is an important tool for many games to add variety, so I've written my own version here.</span></p>
+					<a class="button" href="dungen/dungen.html"><i class="fas fa-sync"></i> Generate</a>
+					<div class="released">Released: 28.05.2020 | Updated: 03.11.2020</div>	
+					<div class="status close"></div>
+				</div>
+				
+				<div class="project"><div class="img"><img src="images/bunker.jpg" alt="preview"></div>
+					<h3><span class="de">Matura Arbeit</span><span class="en hide">Thesis (Matura)</span></h3>
+					<p><span class="de">Mit dieser Arbeit habe ich meine Matura erhalten. Eine milit&auml;rische Einrichtung die in Blender modelliert wurde. Mit hilfe von Blend 4 Web kann das Projekt mit einer VR-Brille angesehen werden.</span><span class="en hide">This diploma thesis earned me my Matura. A military facility was modeled in Blender. With the help of Blend 4 Web, it is possible to run it with VR goggles.</span></p>
+					<a class="button" target="_blank" href="https://filedn.eu/lsg6pD0V8i1jPkW0lY98df7/diplomarbeit/bunker.html"><i class="fas fa-paperclip"></i> Live Demo</a>
+					<div class="released">Released: 04.07.2018 | -</div>
+					<div class="status close"></div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
 
 <footer>
 	<div class="wrap footer">
-		<span>
-			<a href="Impressum.pdf" target="_blank"><span class="de">Impressum</span><span class="en hide">Imprint</span></a>
-
-		</span>
-		
-		<span>&copy; 2018 -<span id="datum"></span> <script>document.getElementById('datum').innerHTML = " "+new Date().getFullYear();</script> Christian Pichler. All rights reserved.</span>
+		<a target="_blank" href="impressum.pdf">Impressum</a><span><span class="copy">&copy;</span> 2018 -<span id="datum"></span> <script>document.getElementById('datum').innerHTML = " "+new Date().getFullYear();</script> Christian Pichler.  <span class="de">Alle rechte vorbehalten</span><span class="en hide">All rights reserved</span>.</span>
 	</div>
 </footer>	 
 </body>
 </html>
 <script>
-	let slideshow = document.getElementById('slideshow-container');
-	
-	const images = [["terrain.jpg","Blender","12.2020"],["sculpting.jpg","Blender","11.2020"],["texture.jpg","Blender","10.2020"],["kitchen.jpg","Blender","02.2017"],["lemontree.png","Paint","03.2016"]];
-	
-	images.forEach(
-	function(item, index) { 
-		const slide = document.createElement("div");
-		slide.classList.add("mySlides");
-		const image = document.createElement("img");
-		image.src = "images/slider/" + images[index][0];
-		const text = document.createElement("p");
-		text.innerHTML = images[index][1] + " (" + images[index][2] + ")";
-		slide.appendChild(image);
-		slide.appendChild(text);
-		slideshow.appendChild(slide);
-	});
-
 const textarray = [
-"Gepriesen sei Pixelbaum!",
-"Seid gegrüßt, ihr seid fürwahr eine holdselige Kreatur!",
-"Wie ist das werte Befinden?",
-"Ihr Antlitz ist von überragender Schönheit.",
-"Ich walte meines Amtes mit Insistenz.",
-"Versucht unbedingt die Spielereien.",
-"Man nennt mich namenloser Held",
-"und Christian ist mein Meister!",
-"Er ist wahrlich ein Virtuose.",
-"Ich leiste ihm ausgezeichnete Dienste.",
-"Pietätloses Verhalten wird nicht toleriert.",
-"Hinterlasst gerne eine Nachricht."
+["Gepriesen sei Pixelbaum!", "Praise be to Pixelbaum!"],
+["Seid gegrüßt, ihr seid fürwahr eine holdselige Kreatur!", "Greetings, you are truly a lovely creature!"],
+["Wie ist das werte Befinden?", "What is your valued well-being?"],
+["Ihr Antlitz ist von überragender Schönheit.", "Your face is of outstanding beauty."],
+["Ich walte meines Amtes mit Insistenz.", "I fulfill my duties with insistence."],
+["Versucht unbedingt die Spielereien.", "Definitely try the tricks."],
+["Man nennt mich namenloser Held", "They call me the nameless hero"],
+["und Christian ist mein Meister!", "and Christian is my master!"],
+["Er ist wahrlich ein Virtuose.", "He is truly a virtuoso."],
+["Ich leiste ihm ausgezeichnete Dienste.", "I serve him excellently."],
+["Pietätloses Verhalten wird nicht toleriert.", "Disrespectful behavior will not be tolerated."],
+["Hinterlasst gerne eine Nachricht.", "Please leave a message."]
 ];
 
+document.getElementById("randtext").innerHTML = "Gepriesen sei Pixelbaum!";
 
-const length = textarray.length;
-var i = 0;
-
-document.getElementById("randtext").innerHTML = textarray[0];
+var language = 0;
+let textIndex = 0;
+let currentText = "";
+let delay = 50;
 
 function RndText() {
-	var text = "";
-	i = i < length-1 ? i+1 : 0;
-	for (var j = 0; j < textarray[i].length; j++){
-	setTimeout(function(j) {    
-    text = text+textarray[i].charAt(j);
-	document.getElementById("randtext").innerHTML = text;
-  },j * 25, j);
-}	
+  currentText = "";
+  textIndex = textIndex < textarray.length - 1 ? textIndex + 1 : 0;
+  textarray[textIndex][language].split("").forEach((char, i) => {
+    setTimeout(() => {
+      currentText += char;
+      document.getElementById("randtext").innerHTML = currentText;
+    }, i * delay);
+  });
 }
 
-setInterval(function(){ RndText(); }, 5000);
-
-var laps = Date.now();
-
-var slideIndex = 1;
-
-showSlides(slideIndex);
-
-function plusSlides(n)
-{
-  laps = Date.now();
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n)
-{
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n)
-{
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length)
-  {
-	  slideIndex = 1;
-  }    
-  if (n < 1)
-  {
-	slideIndex = slides.length
-  }
-  for (i = 0; i < slides.length; i++)
-  {
-	slides[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++)
-  {
-	dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-}
-
-setInterval(function()
-{
-	if(Date.now() - laps >= 8000)
+function changeLanguage(lang) {
+    if(lang === 'de')
 	{
-		plusSlides(1);	
-		laps = Date.now();
-	}
-	
-}, 1000);
+        document.querySelectorAll('.de').forEach(element => {element.classList.remove('hide');});
+        document.querySelectorAll('.en').forEach(element => {element.classList.add('hide');});
+		language = 0;
+    }
+	else
+	{
+        document.querySelectorAll('.en').forEach(element => {element.classList.remove('hide');});
+        document.querySelectorAll('.de').forEach(element => {element.classList.add('hide');});
+		language = 1;
+    }
+}
 
+const intervalId = setInterval(RndText, 5000);
 </script>
